@@ -1,39 +1,33 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import reducers from './reducers';
+import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
-
-import {
-    API_KEY,
-    DOMAIN_NAME,
-    DATABASE_URL,
-    PROJECT_ID,
-    STORAGE_BUCKET,
-    MESSAGING_SENDER_ID
-} from 'react-native-dotenv'
+import LoginForm from './components/LoginForm';
 
 class App extends Component {
 
     componentDidMount() {
         const config = {
-            apiKey: API_KEY,
-            authDomain: DOMAIN_NAME,
-            databaseURL: DATABASE_URL,
-            projectId: PROJECT_ID,
-            storageBucket: STORAGE_BUCKET,
-            messagingSenderId: MESSAGING_SENDER_ID
+            apiKey: "AIzaSyCgLnWJWTWmBxKZMLVaaG37KLsR2n46sSU",
+            authDomain: "react-manager-88fc9.firebaseapp.com",
+            databaseURL: "https://react-manager-88fc9.firebaseio.com",
+            projectId: "react-manager-88fc9",
+            storageBucket: "react-manager-88fc9.appspot.com",
+            messagingSenderId: "221695044299"
         };
         firebase.initializeApp(config);
     }
 
     render() {
+        //Second parameter is for initial state
+        const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
         return (
-            <Provider store={createStore(reducers)}>
-                <View>
-                    <Text>Hello</Text>
-                </View>
+            <Provider store={store}>
+                <LoginForm/>
             </Provider>
         )
     };
