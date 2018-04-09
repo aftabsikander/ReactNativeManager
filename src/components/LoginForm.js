@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Card, CardSection, Input, Button} from "./common";
+import {View, Text} from 'react-native';
+import {Card, CardSection, Input, Button, Spinner} from "./common";
 import {connect} from 'react-redux';
 import {emailChanged, passwordChanged, loginUser} from '../actions';
 
@@ -16,6 +17,29 @@ class LoginForm extends Component {
     loginButtonPress() {
         const {email, password} = this.props;
         this.props.loginUser({email, password});
+    }
+
+    renderLoginButton() {
+        if (this.props.loading) {
+            return <Spinner spinnerSize='large'/>;
+        }
+        return (
+            <Button onPress={this.loginButtonPress.bind(this)}>
+                Login
+            </Button>
+        );
+    }
+
+    renderError() {
+        if (this.props.errorMessage) {
+            return (
+                <View style={{backgroundColor: 'white'}}>
+                    <Text style={styles.errorTextStyle}>
+                        {this.props.errorMessage}
+                    </Text>
+                </View>
+            )
+        }
     }
 
     render() {
@@ -42,11 +66,10 @@ class LoginForm extends Component {
 
                 </CardSection>
 
-                <CardSection>
+                {this.renderError()}
 
-                    <Button onPress={this.loginButtonPress.bind(this)}>
-                        Login
-                    </Button>
+                <CardSection>
+                    {this.renderLoginButton()}
                 </CardSection>
 
             </Card>
@@ -54,11 +77,18 @@ class LoginForm extends Component {
     };
 }
 
-const mapStateToProps = state => {
-    return {
-        email: state.auth.email,
-        password: state.auth.password
-    };
+const styles = {
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red'
+    }
+};
+
+const mapStateToProps = ({auth}) => {
+    const {email, password, errorMessage, loading} = auth;
+
+    return {email, password, errorMessage, loading};
 };
 
 export default connect(mapStateToProps, {
