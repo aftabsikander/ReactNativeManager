@@ -10,7 +10,7 @@ const RouterComponent = () => {
             <Scene key={'root'} hideNavBar={true}>
                 {/* titleStyle={{alignSelf: 'center'}}*/}
                 <Scene key={'auth'}>
-                    <Scene key={'login'} component={LoginForm} title={'Login'} initial/>
+                    <Scene key={'login'} component={LoginForm} title={'Login'} initial />
                 </Scene>
 
                 <Scene key={'main'}>
