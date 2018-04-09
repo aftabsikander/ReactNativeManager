@@ -1,17 +1,24 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 import {CardSection} from "./common";
 
 class ListItem extends Component {
 
+    onEmployeeItemClicked() {
+        Actions.employeeCreate({employeeData: this.props.employee});
+    }
+
     render() {
         const {name} = this.props.employee;
         return (
-            <View>
-                <CardSection>
-                    <Text style={styles.titleStyle}>{name}</Text>
-                </CardSection>
-            </View>
+            <TouchableWithoutFeedback onPress={this.onEmployeeItemClicked.bind(this)}>
+                <View>
+                    <CardSection>
+                        <Text style={styles.titleStyle}>{name}</Text>
+                    </CardSection>
+                </View>
+            </TouchableWithoutFeedback>
         )
     }
 }

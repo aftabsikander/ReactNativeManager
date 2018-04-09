@@ -12,6 +12,7 @@ class EmployeeCreate extends Component {
     }
 
     render() {
+        console.log(this.props.employeeData);
         return (
             <Card>
                 <CardSection>
