@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {CardSection} from "./common";
 
 class ListItem extends Component {
 
     onEmployeeItemClicked() {
-        Actions.employeeCreate({employeeData: this.props.employee});
+        Actions.employeeEdit({employeeData: this.props.employee});
     }
 
     render() {
